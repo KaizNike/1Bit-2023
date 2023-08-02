@@ -1,0 +1,95 @@
+[gd_scene load_steps=11 format=3 uid="uid://lmoouq6v35xn"]
+
+[ext_resource type="Texture2D" uid="uid://cuverj7ofbhjr" path="res://icon.svg" id="1_smyra"]
+[ext_resource type="Script" path="res://GodotSprite3D.gd" id="2_do302"]
+[ext_resource type="Shader" path="res://1BitExtraColors.gdshader" id="3_pm2mo"]
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_83nqw"]
+noise_type = 2
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_gatic"]
+width = 4
+height = 4
+noise = SubResource("FastNoiseLite_83nqw")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_xbva2"]
+shader = ExtResource("3_pm2mo")
+shader_parameter/threshold = 0.5
+shader_parameter/color1 = Color(0.188235, 0.407843, 0.313726, 1)
+shader_parameter/color2 = Color(0.878431, 0.972549, 0.811765, 1)
+shader_parameter/dither_texture = SubResource("NoiseTexture2D_gatic")
+
+[sub_resource type="CanvasTexture" id="CanvasTexture_m8gtm"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_qjuhe"]
+ground_bottom_color = Color(0.156863, 0.431373, 0.454902, 1)
+ground_horizon_color = Color(0.564706, 0.713726, 0.392157, 1)
+
+[sub_resource type="Sky" id="Sky_7b0v2"]
+sky_material = SubResource("ProceduralSkyMaterial_qjuhe")
+
+[sub_resource type="Environment" id="Environment_i3ghv"]
+background_mode = 2
+sky = SubResource("Sky_7b0v2")
+fog_enabled = true
+fog_sun_scatter = 0.07
+fog_density = 0.0942
+
+[node name="Main" type="Node3D"]
+
+[node name="GodotSprite3D" type="Sprite3D" parent="."]
+texture = ExtResource("1_smyra")
+script = ExtResource("2_do302")
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1.38948)
+current = true
+
+[node name="Control" type="Control" parent="Camera3D"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="Camera3D/Control"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0
+text = "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
+
+[node name="1Bit" type="TextureRect" parent="Camera3D/Control"]
+visible = false
+material = SubResource("ShaderMaterial_xbva2")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("CanvasTexture_m8gtm")
+
+[node name="1Bit2" type="TextureRect" parent="Camera3D/Control"]
+visible = false
+material = SubResource("ShaderMaterial_xbva2")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("CanvasTexture_m8gtm")
+
+[node name="1Bit3" type="TextureRect" parent="Camera3D/Control"]
+material = SubResource("ShaderMaterial_xbva2")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("CanvasTexture_m8gtm")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_i3ghv")
